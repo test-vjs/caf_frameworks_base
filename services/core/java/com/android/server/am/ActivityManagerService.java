@@ -25279,11 +25279,9 @@ public class ActivityManagerService extends IActivityManager.Stub
 
         boolean retryCycles = false;
 
-        // need to reset cycle state before calling computeOomAdjLocked because of service connections
-        for (int i=N-1; i>=0; i--) {
-            ProcessRecord app = mLruProcesses.get(i);
-            app.containsCycle = false;
-        }
+        ProcessRecord selectedAppRecord = null;
+        long serviceLastActivity = 0;
+        int numBServices = 0;
         for (int i=N-1; i>=0; i--) {
             ProcessRecord app = mLruProcesses.get(i);
             if (mEnableBServicePropagation && app.serviceb

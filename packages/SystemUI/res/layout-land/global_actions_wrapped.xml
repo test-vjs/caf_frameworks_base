@@ -3,16 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="top|right"
-    android:layout_marginBottom="@dimen/global_actions_top_padding"
-    android:orientation="vertical"
+    android:layout_marginBottom="0dp"
     android:paddingTop="@dimen/global_actions_top_padding"
     android:clipToPadding="false"
     android:theme="@style/qs_theme"
-    android:clipChildren="true">
+    android:clipChildren="false">
 
-    <ScrollView
-        android:layout_width="@dimen/global_actions_panel_width"
+    <HorizontalScrollView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scrollbars="none"
         android:layout_gravity="top|right">
@@ -23,23 +21,10 @@
             android:layout_width="@dimen/global_actions_panel_width"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:padding="12dp"
             android:translationZ="9dp" />
 
-
-    </ScrollView>
-
-    <!-- For separated button-->
-    <FrameLayout
-        android:id="@+id/separated_button"
-        android:layout_width="@dimen/global_actions_panel_width"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top|right"
-        android:layout_marginTop="6dp"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="@dimen/global_actions_padding"
-	android:translationZ="@dimen/global_actions_translate" />
+    </HorizontalScrollView>
 
 </com.android.systemui.HardwareUiLayout>

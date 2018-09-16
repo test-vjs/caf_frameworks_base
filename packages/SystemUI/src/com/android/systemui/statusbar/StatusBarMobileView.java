@@ -117,6 +117,13 @@ public class StatusBarMobileView extends FrameLayout implements DarkReceiver,
         initDotView();
     }
 
+    private void updateMobileTypeView(boolean useOldStyle) {
+        int visOld = mMobileType.getVisibility();
+        mMobileType.setVisibility(View.GONE);
+        mMobileType = findViewById(useOldStyle ? R.id.mobile_type_old : R.id.mobile_type);
+        mMobileType.setVisibility(visOld);
+    }
+
     private void initDotView() {
         mDotView = new StatusBarIconView(mContext, mSlot, null);
         mDotView.setVisibleState(STATE_DOT);
@@ -139,6 +146,8 @@ public class StatusBarMobileView extends FrameLayout implements DarkReceiver,
             initViewState();
             return;
         }
+
+        updateMobileTypeView(StatusBar.USE_OLD_MOBILETYPE);
 
         if (!mState.equals(state)) {
             updateState(state.copy());

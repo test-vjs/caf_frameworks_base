@@ -101,6 +101,7 @@ public class MobileSignalController extends SignalController<
     FiveGServiceState mFiveGState;
     private final int NUM_LEVELS_ON_5G;
     /**********************************************************/
+    private boolean mVoLTEicon;
 
     private ImsManager mImsManager;
     private ImsManager.Connector mImsManagerConnector;
@@ -190,6 +191,9 @@ public class MobileSignalController extends SignalController<
             resolver.registerContentObserver(
                     Settings.System.getUriFor(Settings.System.SHOW_FOURG_ICON), false,
                     this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(
+                    Settings.System.getUriFor(Settings.System.SHOW_VOLTE_ICON), false,
+                    this, UserHandle.USER_ALL);
             updateSettings();
         }
 
@@ -211,6 +215,11 @@ public class MobileSignalController extends SignalController<
 
         mShow4gForLte = Settings.System.getIntForUser(resolver,
                 Settings.System.SHOW_FOURG_ICON, 0,
+                UserHandle.USER_CURRENT) == 1;
+
+
+        mVoLTEicon = Settings.System.getIntForUser(resolver,
+                Settings.System.SHOW_VOLTE_ICON, 1,
                 UserHandle.USER_CURRENT) == 1;
 
         mapIconSets();
@@ -416,7 +425,7 @@ public class MobileSignalController extends SignalController<
         int resId = 0;
         int voiceNetTye = getVoiceNetworkType();
 
-        if ( mCurrentState.showHD ) {
+        if ( mCurrentState.showHD && mVoLTEicon ) {
             resId = R.drawable.ic_volte;
         }else if ( mDataNetType == TelephonyManager.NETWORK_TYPE_LTE
                     || mDataNetType == TelephonyManager.NETWORK_TYPE_LTE_CA

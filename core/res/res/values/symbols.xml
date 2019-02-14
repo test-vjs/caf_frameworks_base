@@ -3458,4 +3458,16 @@
 
   <java-symbol type="integer" name="config_sms_authorization_timeout_ms" />
   <java-symbol type="bool" name="config_sms_authorization_enabled" />
+  <java-symbol type="integer" name="db_wal_truncate_size" />
+
+  <java-symbol type="string" name="config_defaultAssistantComponentName" />
+
+  <!-- Gradients Shit -->
+  <java-symbol type="color" name="gradient_start_light" />
+  <java-symbol type="color" name="gradient_start_dark" />
+  <java-symbol type="color" name="gradient_end_light" />
+  <java-symbol type="color" name="gradient_end_dark" />
+  <java-symbol type="color" name="gradient_start" />
+  <java-symbol type="color" name="gradient_end" />
+
 </resources>

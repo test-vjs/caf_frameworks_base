@@ -3896,6 +3896,11 @@ public class StatusBar extends SystemUI implements DemoMode,
     protected void updateTheme() {
         final boolean inflated = mStackScroller != null && mStatusBarWindowManager != null;
 
+        int userThemeSetting = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.SYSTEM_UI_THEME, 0, mCurrentUserId);
+        boolean useDarkTheme = false;
+        if (userThemeSetting == 0) {
+
         // The system wallpaper defines if QS should be light or dark.
         WallpaperColors systemColors = mColorExtractor
                 .getWallpaperColors(WallpaperManager.FLAG_SYSTEM);
@@ -3905,8 +3910,13 @@ public class StatusBar extends SystemUI implements DemoMode,
         final boolean nightModeWantsDarkTheme = DARK_THEME_IN_NIGHT_MODE
                 && (config.uiMode & Configuration.UI_MODE_NIGHT_MASK)
                     == Configuration.UI_MODE_NIGHT_YES;
-        final boolean useDarkTheme = wallpaperWantsDarkTheme || nightModeWantsDarkTheme;
-        if (isUsingDarkTheme() != useDarkTheme) {
+        useDarkTheme = wallpaperWantsDarkTheme || nightModeWantsDarkTheme;
+        } else {
+            useDarkTheme = userThemeSetting == 2;
+            // Check for black and white accent so we don't end up
+            // with white on white or black on black
+        }	
+	if (isUsingDarkTheme() != useDarkTheme) {
             mUiOffloadThread.submit(() -> {
                 try {
                     mOverlayManager.setEnabled("com.android.systemui.theme.dark",
@@ -3915,7 +3925,7 @@ public class StatusBar extends SystemUI implements DemoMode,
                     Log.w(TAG, "Can't change theme", e);
                 }
             });
-        }
+        } 
 
         // Lock wallpaper defines the color of the majority of the views, hence we'll use it
         // to set our default theme.
